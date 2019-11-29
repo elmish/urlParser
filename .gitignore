@@ -1,0 +1,36 @@
+# OSX
+#
+.DS_Store
+
+# node.js
+#
+**/node_modules/
+**/npm/
+npm-debug.log
+samples/**/public
+
+.vscode/
+.ionide/
+# F#
+.fake/
+packages/
+build/
+obj
+bin
+out
+
+# git
+*.orig
+samples/react-native/navigation/windows/
+
+.vs
+
+# Ignore production files generated from webpack
+**/public/bundle.js
+**/public/bundle.js.map
+
+*.nupkg
+Directory.Build.props
+temp
+docs/outputpaket-files
+paket-files
