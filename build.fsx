@@ -64,6 +64,10 @@ Target.create "Build" (fun _ ->
     )
 )
 
+Target.create "Test" (fun _ ->
+    DotNet.test (fun a -> a.WithCommon id) "tests"
+)
+
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
 Target.create "Meta" (fun _ ->
@@ -186,6 +190,7 @@ Target.create "Publish" ignore
   ==> "Meta"
   ==> "Restore"
   ==> "Build"
+  ==> "Test"
   ==> "Package"
   ==> "GenerateDocs"
   ==> "PublishNuget"
@@ -194,4 +199,4 @@ Target.create "Publish" ignore
 
 
 // start build
-Target.runOrDefault "Build"
+Target.runOrDefault "Test"

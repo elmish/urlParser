@@ -3,3 +3,9 @@ storage: none
 
 nuget FSharp.Core  redirects:force, content:none
 nuget Fable.Core
+nuget FsCheck
+nuget FsCheck.NUnit
+nuget nunit
+nuget NUnit3TestAdapter
+nuget Microsoft.NET.Test.Sdk
+nuget Unquote
