@@ -14,6 +14,6 @@ paket add Fable.Elmish.UrlParser
 
 ## Building
 
-.NET Core SDK and fake tool installed globally are required.
-
+With .NET Core SDK v6 and fake tool:
+> `dotnet tool restore`
 > `fake build`

@@ -7,7 +7,9 @@
     <Compile Include="parser.fs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fable.Elmish" Version="4.0.0-beta-*" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="*.fsproj; *.fs" PackagePath="fable\" />
   </ItemGroup>
-  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
