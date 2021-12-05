@@ -1,9 +1,16 @@
-(*** hide ***)
-#I "../../src/bin/Release/netstandard2.0"
-#r "Fable.Elmish.UrlParser.dll"
+(**
+---
+layout: standard
+title: Query parameters
+toc: false
+---
+**)
 
-(** Working with query parameters
----------
+(*** hide ***)
+#load "./../import.fsx"
+
+(**
+
 In addition to working with routes, the library also defines parser combinators for working with `?` queries:
 
 - `<?>` combinator for query parameters,
@@ -16,15 +23,16 @@ Some examples:
 
 open Elmish.UrlParser
 
-type PersonQuery = 
+type PersonQuery =
     { name: string
       age: int }
 
-type Route = 
-    | Blog of int 
-    | Search of string option 
+type Route =
+    | Blog of int
+    | Search of string option
     | Query of PersonQuery option
-    with static member FromParams name age = 
+
+    with static member FromParams name age =
         match name,age with
         | Some name, Some age -> Query (Some { name = name; age = age})
         | _ -> Query None
@@ -41,12 +49,13 @@ Note that unlike route combinators, which fail to match the entire route if some
 It's up to you if you decide to accept a query parameter as `None`.
 
 The parser above will resolve:
-<pre>
+
+```
     blog/              ==>  Some (Search None)
     blog?search=cats   ==>  Some (Search (Some "cats"))
     blog/42            ==>  Some (Blog 42)
     ?name=tom&age=42   ==>  Some (Query {name="tom"; age=42})
     ?name=tom          ==>  Some (Query None)
-</pre>
+```
 
 *)

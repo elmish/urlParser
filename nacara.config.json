@@ -1,0 +1,41 @@
+{
+    "siteMetadata": {
+        "title": "Elmish.UrlParser",
+        "url": "https://elmish.github.io",
+        "baseUrl": "/urlParser/",
+        "editUrl" : "https://github.com/elmish/urlParser/edit/master/docs",
+        "favIcon": "static/img/logo.png"
+    },
+    "navbar": {
+        "start": [
+            {
+                "pinned": true,
+                "label": "Docs",
+                "section": "docs",
+                "url": "/urlParser/docs/parsing.html"
+            }
+        ],
+        "end": [
+            {
+                "url": "https://github.com/elmish/urlParser",
+                "icon": "fab fa-2x fa-github",
+                "label": "GitHub"
+            }
+        ]
+    },
+    "remarkPlugins": [
+        {
+            "resolve": "gatsby-remark-vscode",
+            "property": "remarkPlugin",
+            "options": {
+                "theme": "Atom One Light",
+                "extensions": [
+                    "vscode-theme-onelight"
+                ]
+            }
+        }
+    ],
+    "layouts": [
+        "nacara-layout-standard"
+    ]
+}

@@ -1,9 +1,17 @@
-(*** hide ***)
-#I "../../src/bin/Release/netstandard2.0"
-#r "Fable.Elmish.UrlParser.dll"
+(**
+---
+layout: standard
+title: Parsing routes
+toc: false
+---
+**)
 
-(** Parsing routes
----------
+(*** hide ***)
+
+#load "./../import.fsx"
+
+(**
+
 The library defines building blocks for processing URLs in a way that assigns types to the values extracted.
 The idea is to define a parser in type-safe fashion, using combinators:
 
@@ -15,8 +23,6 @@ The idea is to define a parser in type-safe fashion, using combinators:
 
 Some examples:
 *)
-
-#r "Fable.Elmish.UrlParser.dll"
 
 open Elmish.UrlParser
 
@@ -38,7 +44,9 @@ Normally you want to put many of these parsers together to handle all possible r
 
 *)
 
-type Route = Blog of int | Search of string
+type Route =
+    | Blog of int
+    | Search of string
 
 let route =
     oneOf
@@ -60,7 +68,7 @@ parse route "blog"       // None
 
 (**
 
-Note that F# case constructors take all of the arguments as a tuple, while the parser will apply the arguments individually, so we may need to adapt the signature: 
+Note that F# case constructors take all of the arguments as a tuple, while the parser will apply the arguments individually, so we may need to adapt the signature:
 
 *)
 
@@ -73,6 +81,6 @@ let route2 state =
     map (curry BlogDouble) (s "blog" </> i32 </> str) state
 
 (**
- 
+
 Now the compiler is happy for the two arguments to be passed individually to the curried case constructor.
 *)
