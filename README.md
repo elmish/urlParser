@@ -1,6 +1,6 @@
 Elmish-urlParser: urlParser extras for Elmish apps.
 =======
-[![Windows Build](https://ci.appveyor.com/api/projects/status/70805g9py6qx94iy?svg=true)](https://ci.appveyor.com/project/et1975/urlParser) [![Mono/OSX build](https://travis-ci.org/elmish/urlParser.svg?branch=master)](https://travis-ci.org/elmish/urlParser) [![NuGet version](https://badge.fury.io/nu/Fable.Elmish.UrlParser.svg)](https://badge.fury.io/nu/Fable.Elmish.UrlParser)
+[![Windows Build](https://ci.appveyor.com/api/projects/status/70805g9py6qx94iy?svg=true)](https://ci.appveyor.com/project/et1975/urlParser) [![NuGet version](https://badge.fury.io/nu/Fable.Elmish.UrlParser.svg)](https://badge.fury.io/nu/Fable.Elmish.UrlParser)
 
 Elmish-UrlParser implements parser combinators for turning URLs into strongly-typed data.
 
