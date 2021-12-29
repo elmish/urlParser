@@ -152,10 +152,5 @@ Target.create "Publish" ignore
     ==> "PublishNuget"
     ==> "Publish"
 
-// Documentation generation is separate from the build
-// because it should be done by the Github workflow
-"GenerateDocs"
-    ==> "ReleaseDocs"
-
 // start build
 Target.runOrDefault "Test"
