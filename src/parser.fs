@@ -107,7 +107,13 @@ let s str : Parser<_,_> =
                 []
     inner
 
-
+(** Parse all the remaining unvisited segments
+```
+    remaining  // can parse /blog/, /blog/article/32, / or anything else
+```
+*)
+let remaining: Parser<(string -> 'a), 'a> = (fun s ->
+    [ State.mkState (List.concat [s.visited; s.unvisited]) [] s.args (s.value (System.String.Join("/", s.unvisited))) ])
 
 (**
 #### Combining parsers
@@ -130,6 +136,15 @@ Parse a path with multiple segments.
     /search/frog   ==>  Some "frog"
     /search/       ==>  None
     /cats/         ==>  None
+</pre>
+```
+    parse (s "search" </> remaining) location
+```
+<pre>
+    /search/cats/           ==>  Some "cats"
+    /search/cats/and/dogs   ==>  Some "cats/and/dogs"
+    /search/                ==>  Some ""
+    /cats/                  ==>  None
 </pre>
 *)
 let inline (</>) (parseBefore: Parser<_,_>) (parseAfter: Parser<_,_>) =
