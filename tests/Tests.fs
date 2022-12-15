@@ -6,7 +6,6 @@ module Elmish.UrlParserTests
 open Swensen.Unquote
 open Elmish.UrlParser
 
-[<StructuralEquality; NoComparison>]
 type Routes =
   IntAndTwoStringOptions of int * string option * string option
 
