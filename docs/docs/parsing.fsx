@@ -20,6 +20,7 @@ The idea is to define a parser in type-safe fashion, using combinators:
 - `str` combinator to extract a string,
 - `i32` combinator to attempt to parse an `int`.
 - `top` combinator that takes nothing.
+- `remaining` combinator to get the remaining parts of the URL
 
 Some examples:
 *)
@@ -35,6 +36,8 @@ parse (s "blog" </> i32) "blog/hello" // None
 parse (s "search" </> str) "search/dogs" // Some "dogs"
 
 parse (s "search" </> str) "search/13" // Some "13"
+
+parse (s "search" </> remaining) "search/cats/dogs" // Some "cats/dogs"
 
 parse (s "search" </> str) "search" // None
 
