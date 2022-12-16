@@ -1,3 +1,7 @@
+## 1.0.0
+* Release as stable
+* `remaining` parser by @theor
+
 ## 1.0.0-beta-2
 * Lower FSharp.Core requirement
 * Remove Fable.Elmish dependency

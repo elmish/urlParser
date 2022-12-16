@@ -9,6 +9,6 @@
     <Compile Include="../src/parser.fs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Elmish" Version="4.0.0-beta-*" />
+    <PackageReference Update="FSharp.Core" Version="4.7.*" />
   </ItemGroup>
 </Project>
