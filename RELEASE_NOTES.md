@@ -1,3 +1,6 @@
+## 1.0.1
+* Support empty params query
+
 ## 1.0.0
 * Release as stable
 * `remaining` parser by @theor

@@ -354,10 +354,12 @@ let internal toKeyValuePair (segment: string) =
 #endif
 
 let parseParams (querystring: string) =
-    querystring.Substring(1).Split('&')
-    |> Seq.map toKeyValuePair
-    |> Seq.choose id
-    |> Map.ofSeq
+    if System.String.IsNullOrEmpty querystring then Map.empty
+    else
+        querystring.Split('&')
+        |> Seq.map toKeyValuePair
+        |> Seq.choose id
+        |> Map.ofSeq
 
 (**
 #### Parsers
@@ -367,7 +369,7 @@ let parseUrl (parser: Parser<_,_>) (url:string) =
     let pos = url.IndexOf "?"
     if pos >= 0 then
         let path = url.Substring(0,pos)
-        let search = url.Substring(pos)
+        let search = url.Substring(pos+1)
         parse parser path (parseParams search)
     else
         parse parser url Map.empty
