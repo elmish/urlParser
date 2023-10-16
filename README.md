@@ -14,5 +14,5 @@ paket add Fable.Elmish.UrlParser
 
 ## Building
 
-With .NET Core SDK v6 and fake tool:
+With .NET Core SDK v6:
 > `fotnet fsi build.fsx`

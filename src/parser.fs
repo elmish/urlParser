@@ -356,7 +356,8 @@ let internal toKeyValuePair (segment: string) =
 let parseParams (querystring: string) =
     if System.String.IsNullOrEmpty querystring then Map.empty
     else
-        querystring.Split('&')
+        let querystring' = if querystring.StartsWith("?") then querystring.Substring(1) else querystring 
+        querystring'.Split('&')
         |> Seq.map toKeyValuePair
         |> Seq.choose id
         |> Map.ofSeq
