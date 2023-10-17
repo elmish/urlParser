@@ -1,3 +1,6 @@
+## 1.0.2
+* Skip query's "?" (#25)
+
 ## 1.0.1
 * Support empty params query
 

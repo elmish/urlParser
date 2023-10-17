@@ -1,5 +1,4 @@
 #!/usr/bin/env -S dotnet fsi
-#r "nuget: Fake.Core.Target"
 #r "nuget: Fake.IO.FileSystem"
 #r "nuget: Fake.DotNet.Cli"
 #r "nuget: Fake.Core.Target"
@@ -34,8 +33,6 @@ System.Environment.GetCommandLineArgs()
 |> Context.RuntimeContext.Fake
 |> Context.setExecutionContext
 
-let withWorkDir = DotNet.Options.withWorkingDirectory
-
 Target.create "Clean" (fun _ ->
     Shell.cleanDir "src/obj"
     Shell.cleanDir "src/bin"
@@ -45,23 +42,12 @@ Target.create "Clean" (fun _ ->
 
 Target.create "Restore" (fun _ ->
     projects
-    |> Seq.iter (fun s ->
-        let dir = Path.GetDirectoryName s
-        DotNet.restore (fun a -> a.WithCommon (withWorkDir dir)) s
-    )
+    |> Seq.iter (Path.GetDirectoryName >> DotNet.restore id)
 )
 
 Target.create "Build" (fun _ ->
     projects
-    |> Seq.iter (fun s ->
-        let dir = Path.GetDirectoryName s
-        DotNet.build (fun a ->
-            a.WithCommon
-                (fun c ->
-                    let c = c |> withWorkDir dir
-                    {c with CustomParams = Some "/p:SourceLinkCreate=true"}))
-            s
-    )
+    |> Seq.iter (Path.GetDirectoryName >> DotNet.build id)
 )
 
 Target.create "Test" (fun _ ->
@@ -92,19 +78,11 @@ Target.create "Meta" (fun _ ->
 
 Target.create "Package" (fun _ ->
     projects
-    |> Seq.iter (fun s ->
-        let dir = Path.GetDirectoryName s
-        DotNet.pack (fun a ->
-            a.WithCommon (withWorkDir dir)
-        ) s
-    )
+    |> Seq.iter (Path.GetDirectoryName >> DotNet.pack id)
 )
 
 Target.create "PublishNuget" (fun _ ->
-    let exec dir =
-        DotNet.exec (fun a ->
-            a.WithCommon (withWorkDir dir)
-        )
+    let exec dir = DotNet.exec (DotNet.Options.withWorkingDirectory dir)
 
     let args = sprintf "push Fable.Elmish.UrlParser.%s.nupkg -s nuget.org -k %s" (string release.SemVer) (Environment.environVar "nugetkey")
     let result = exec "src/bin/Release" "nuget" args
