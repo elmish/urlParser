@@ -72,6 +72,7 @@ let custom tipe (stringToSomething: string->Result<_,_>) : Parser<_,_> =
     /42/     ==>  Some "42"
 </pre>
 *)
+[<System.Obsolete("UrlParser.str is deprecated, please use parseString instead.")>]
 let str state =
     custom "string" Ok state
 
@@ -86,9 +87,17 @@ let str state =
     /42/     ==>  Some 42
 </pre>
 *)
+[<System.Obsolete("UrlParser.i32 is deprecated, please use parseInt instead.")>]
 let i32 state =
     custom "i32" (System.Int32.TryParse >> function true, value -> Ok value | _ -> Error "Can't parse int" ) state
 
+/// Parse a segment of the path as a `String`.
+let parseString state = 
+    custom "String" Ok state
+
+/// Parse a segment of the path as an `Int32`.
+let parseInt state = 
+    custom "Int32" (System.Int32.TryParse >> function true, value -> Ok value | _ -> Error "Can't parse Int32" ) state
 
 (** Parse a segment of the path if it matches a given string.
 ```
@@ -96,7 +105,20 @@ let i32 state =
               // but not /glob/ or /42/ or anything else
 ```
 *)
+[<System.Obsolete("UrlParser.s is deprecated, please use matchString instead.")>]
 let s str : Parser<_,_> =
+    let inner { visited = visited; unvisited = unvisited; args = args; value = value } =
+        match unvisited with
+        | [] -> []
+        | next :: rest ->
+            if next = str then
+                [ State.mkState (next :: visited) rest args value ]
+            else
+                []
+    inner
+
+/// Parse a segment of the path if it matches a given string.
+let matchString str : Parser<_,_> =
     let inner { visited = visited; unvisited = unvisited; args = args; value = value } =
         match unvisited with
         | [] -> []
@@ -222,10 +244,13 @@ let oneOf parsers state =
     /blog/post/42  ==>  Some (Post 42)
 </pre>
 *)
+[<System.Obsolete("UrlParser.top is deprecated, please use matchNothing instead.")>]
 let top state=
     [state]
 
-
+/// A parser that does not consume any path segments.
+let matchNothing state = 
+    [state]
 
 (**
 #### Query parameters
