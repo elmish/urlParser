@@ -42,16 +42,26 @@ Target.create "Clean" (fun _ ->
 
 Target.create "Restore" (fun _ ->
     projects
-    |> Seq.iter (Path.GetDirectoryName >> DotNet.restore id)
+    |> Seq.iter (fun p ->
+        DotNet.restore
+            (fun opts -> { opts with MSBuildParams = { opts.MSBuildParams with DisableInternalBinLog = true } })
+            (Path.GetDirectoryName p))
 )
 
 Target.create "Build" (fun _ ->
     projects
-    |> Seq.iter (Path.GetDirectoryName >> DotNet.build id)
+    |> Seq.iter (fun p ->
+        DotNet.build
+            (fun opts -> { opts with MSBuildParams = { opts.MSBuildParams with DisableInternalBinLog = true } })
+            (Path.GetDirectoryName p))
 )
 
 Target.create "Test" (fun _ ->
-    DotNet.test (fun a -> a.WithCommon id) "tests"
+    DotNet.test
+        (fun a ->
+            let a = a.WithCommon id
+            { a with MSBuildParams = { a.MSBuildParams with DisableInternalBinLog = true } })
+        "tests"
 )
 
 let release = ReleaseNotes.load "RELEASE_NOTES.md"
@@ -78,7 +88,10 @@ Target.create "Meta" (fun _ ->
 
 Target.create "Package" (fun _ ->
     projects
-    |> Seq.iter (Path.GetDirectoryName >> DotNet.pack id)
+    |> Seq.iter (fun p ->
+        DotNet.pack
+            (fun opts -> { opts with MSBuildParams = { opts.MSBuildParams with DisableInternalBinLog = true } })
+            (Path.GetDirectoryName p))
 )
 
 Target.create "PublishNuget" (fun _ ->
